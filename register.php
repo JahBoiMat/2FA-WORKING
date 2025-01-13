@@ -10,7 +10,7 @@ include('includes/navbar.php');
             <div class="col-md-6">
                 <div class="card shadow">
                     <div class="card-header">
-                        <h5>Registration Form</h5>
+                        <h5>Create an Account</h5>
                     </div>
                     <div class="card-body">
 
