@@ -1,5 +1,8 @@
-<?php include('includes/header.php'); ?>
-
+<?php 
+$page_title = "Home Page";
+include('includes/header.php'); 
+include('includes/navbar.php');
+?>
 
 <div class="py-5">
     <div class="container">
