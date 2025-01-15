@@ -60,6 +60,7 @@ if(isset($_POST['register-btn']))
     {
         $_SESSION['status'] = "Email ID Aldready Exists";
         header("Location: register.php");
+        exit();
     }
     else
     {
@@ -72,11 +73,13 @@ if(isset($_POST['register-btn']))
             sendemail_verify("$name","$email","$verify_token");
             $_SESSION['status'] = "Registration Successfull! Please check your inbox to verify your Email.";
             header("Location: register.php");
+            exit();
         }
         else
         {
             $_SESSION['status'] = "An unexpected error occurred, Registration failed.";
             header("Location: register.php");
+            exit();
         }
     }
 }
