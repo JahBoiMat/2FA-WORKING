@@ -28,7 +28,7 @@ include('includes/navbar.php');
                     </div>
                     <div class="card-body">
 
-                        <form action="">
+                        <form action="logincode.php" method="POST">
                             <div class="form-group mb-3">
                                 <label for="">Email Address</label>
                                 <input type="text" name="email" class="form-control">
