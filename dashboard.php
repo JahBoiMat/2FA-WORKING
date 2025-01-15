@@ -25,7 +25,6 @@ include('includes/navbar.php');
                         <h4>User Dashboard</h4>
                     </div>
                     <div class="card-body">
-                        <h4>You must be logged in to access this page</h4>
                         <hr>
                         <h5>Welcome, <?= $_SESSION['auth_user']['username'];?></h5>
                         <h5>Email: <?=  $_SESSION['auth_user']['email'];?></h5>
