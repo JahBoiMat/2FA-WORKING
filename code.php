@@ -29,11 +29,13 @@ function sendemail_verify($name,$email,$verify_token)
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = '2FA Verification Code';
-    $mail->Body    = '
+    $email_template = "
     <h2>You have registered with Merk Inc</h2>
-    <h5>Here is your 2FA Code</h5>
-    < 
-    ';
+    <h5>Please verify your email address to Login with the below link</h5>
+    <br></br>
+    <a href='http://localhost/2FA%20Login/verify-email.php?token=$verify_token'> Click Me</a>
+    ";
+    $mail->Body = $email_template;
 
     $mail->send();
     echo 'Message has been sent';
@@ -43,10 +45,12 @@ function sendemail_verify($name,$email,$verify_token)
 if(isset($_POST['register-btn']))
 {
     $name = $_POST['name'];
-    $name = $_POST['phone'];
-    $name = $_POST['email'];
-    $name = $_POST['password'];
-    $verify_token = md5(rand())
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $verify_token = md5(rand());
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     //Email existr check thing
     $check_email_query = "SELECT email FROM users WHERE email='$email' LIMIT 1";
@@ -60,12 +64,12 @@ if(isset($_POST['register-btn']))
     else
     {
         //Insert User / Register Userdata
-        $query = "INSERT INTO users (name,phone,email,password,verify_token) VALUES ('$name','$phone','$email','$password','$verify_token')";
+        $query = "INSERT INTO users (name,phone,email,password,verify_token) VALUES ('$name','$phone','$email','$hashed_password','$verify_token')";
         $query_run = mysqli_query($con, $query);
 
         if($query_run)
         {
-            senemail_verify("$name","$email","$verify_token");
+            sendemail_verify("$name","$email","$verify_token");
             $_SESSION['status'] = "Registyration Successfull! Please verify your Email.";
             header("Location: register.php");
         }
