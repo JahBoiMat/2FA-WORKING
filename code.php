@@ -28,12 +28,12 @@ function sendemail_verify($name,$email,$verify_token)
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = '2FA Verification Code';
+    $mail->Subject = 'Verify Your Email';
     $email_template = "
     <h2>You have registered with Merk Inc</h2>
     <h5>Please verify your email address to Login with the below link</h5>
     <br></br>
-    <a href='http://localhost/2FA%20Login/verify-email.php?token=$verify_token'> Click Me</a>
+    <a href='http://localhost/2FA%20Login/verify-email.php?token=$verify_token'> Verify</a>
     ";
     $mail->Body = $email_template;
 
