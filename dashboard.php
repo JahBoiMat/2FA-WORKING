@@ -1,5 +1,6 @@
 <?php 
 $page_title = "Dashboard";
+include_once('authentication.php');
 include('includes/header.php'); 
 include('includes/navbar.php');
 ?>
@@ -14,6 +15,10 @@ include('includes/navbar.php');
                     </div>
                     <div class="card-body">
                         <h4>You must be logged in to access this page</h4>
+                        <hr>
+                        <h5>Welcome, <?= $_SESSION['auth_user']['username'];?></h5>
+                        <h5>Email: <?=  $_SESSION['auth_user']['email'];?></h5>
+                        <h5>Phone: <?= $_SESSION['auth_user']['phone'];?></h5>
                     </div>
                 </div>
             </div>

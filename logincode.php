@@ -5,7 +5,7 @@ include('dbcon.php');
 
 if(isset($_POST['login_now_btn']))
 {
-    if(!empty(trim($_POST['email'];)) && !empty(trim($_POST['password'];)))
+    if(!empty(trim($_POST['email'])) && !empty(trim($_POST['password'])))
     {
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
@@ -23,15 +23,15 @@ if(isset($_POST['login_now_btn']))
                     'username' => $row['name'],
                     'phone' => $row['phone'],
                     'email' => $row['email'],
-                ]
+                ];
                 $_SESSION['status'] = "You are now logged in!";
-                header("Location: dashboard.php")
+                header("Location: dashboard.php");
                 exit(0);
             }
             else
             {
                 $_SESSION['status'] = "Email not verified, Please check your inbox to verify your email.";
-                header("Location: login.php")
+                header("Location: login.php");
                 exit(0);
             }
 
@@ -39,7 +39,7 @@ if(isset($_POST['login_now_btn']))
         else
         {
             $_SESSION['status'] = "Invalid Email or Password";
-            header("Location: login.php")
+            header("Location: login.php");
             exit(0);
         }
 
@@ -47,7 +47,7 @@ if(isset($_POST['login_now_btn']))
     else
     {
         $_SESSION['status'] = "All fields must be filled in.";
-        header("Location: login.php")
+        header("Location: login.php");
         exit(0);
     }
 
