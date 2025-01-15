@@ -31,7 +31,8 @@ function sendemail_verify($name,$email,$verify_token)
     $mail->Subject = 'Verify Your Email';
     $email_template = "
     <h2>You have registered with Merk Inc</h2>
-    <h5>Please verify your email address to Login with the below link</h5>
+    <h5>A new login was detected from this email address.</h5>
+    <h5>If this was you, please verify your email address to Login with the below link</h5>
     <br></br>
     <a href='http://localhost/2FA%20Login/verify-email.php?token=$verify_token'> Verify</a>
     ";
