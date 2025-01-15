@@ -70,12 +70,12 @@ if(isset($_POST['register-btn']))
         if($query_run)
         {
             sendemail_verify("$name","$email","$verify_token");
-            $_SESSION['status'] = "Registration Successfull! Please verify your Email.";
+            $_SESSION['status'] = "Registration Successfull! Please check your inbox to verify your Email.";
             header("Location: register.php");
         }
         else
         {
-            $_SESSION['status'] = "Registration Failed.";
+            $_SESSION['status'] = "An unexpected error occurred, Registration failed.";
             header("Location: register.php");
         }
     }
