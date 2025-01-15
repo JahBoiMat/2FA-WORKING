@@ -1,5 +1,11 @@
 <?php 
 session_start();
+if(isset($_SESSION['authenticated']))
+{
+    $_SESSION['status'] = "You are already logged in!";
+    header('Location: dashboard.php');
+    exit(0);
+}
 $page_title = "Login Form";
 include('includes/header.php'); 
 include('includes/navbar.php');
@@ -38,7 +44,7 @@ include('includes/navbar.php');
                                 <input type="text" name="password" class="form-control">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" name="login_now_btn" class="btn btn-primary">Login</button>
                             </div>
                         </form>
 

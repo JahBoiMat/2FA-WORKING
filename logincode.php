@@ -10,14 +10,14 @@ if(isset($_POST['login_now_btn']))
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
 
-        $login_query = "SELECT * FROM users WHERE email = '$email' AND password='$password' LIMIT 1";
+        $login_query = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
         $login_query_run = mysqli_query($con, $login_query);
-
-        if(mysqli_num_rows($login_query_run)>0)
-        {
+        
+        if (mysqli_num_rows($login_query_run) > 0) {
             $row = mysqli_fetch_array($login_query_run);
-            if($row['verify_status'] == "1")
-            {
+            // Verify hashed password
+            if (password_verify($password, $row['password'])) {
+                // Set session and redirect
                 $_SESSION['authenticated'] = TRUE;
                 $_SESSION['auth_user'] = [
                     'username' => $row['name'],
@@ -27,31 +27,16 @@ if(isset($_POST['login_now_btn']))
                 $_SESSION['status'] = "You are now logged in!";
                 header("Location: dashboard.php");
                 exit(0);
-            }
-            else
-            {
-                $_SESSION['status'] = "Email not verified, Please check your inbox to verify your email.";
+            } else {
+                $_SESSION['status'] = "Invalid Password";
                 header("Location: login.php");
                 exit(0);
             }
-
-        }
-        else
-        {
-            $_SESSION['status'] = "Invalid Email or Password";
+        } else {
+            $_SESSION['status'] = "Invalid Email";
             header("Location: login.php");
             exit(0);
         }
-
     }
-    else
-    {
-        $_SESSION['status'] = "All fields must be filled in.";
-        header("Location: login.php");
-        exit(0);
-    }
-
-
 }
-
 ?>
