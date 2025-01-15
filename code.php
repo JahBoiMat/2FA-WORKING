@@ -14,12 +14,12 @@ function sendemail_verify($name,$email,$verify_token)
     $mail = new PHPMailer(true);
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.google.com';                     //Set the SMTP server to send through
+    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
     $mail->Username   = 'navnesenn29@gmail.com';                     //SMTP username
     $mail->Password   = 'Bruker99!';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
     $mail->setFrom('navnesenn29@gmail.com',$name);
@@ -70,7 +70,7 @@ if(isset($_POST['register-btn']))
         if($query_run)
         {
             sendemail_verify("$name","$email","$verify_token");
-            $_SESSION['status'] = "Registyration Successfull! Please verify your Email.";
+            $_SESSION['status'] = "Registration Successfull! Please verify your Email.";
             header("Location: register.php");
         }
         else
