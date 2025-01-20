@@ -23,7 +23,7 @@ function sendemail_verify($name, $email, $verify_token)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
-        $mail->setFrom('navnesenn29@gmail.com', $name);
+        $mail->setFrom('navnesenn29@gmail.com', "Merk Inc");
         $mail->addAddress($email, $name);
         $mail->addReplyTo('navnesenn29@gmail.com', 'Contact');
 
@@ -89,8 +89,10 @@ if (isset($_POST['register-btn'])) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Email existence check
-    $check_email_query = "SELECT email FROM users WHERE email='$email' LIMIT 1";
-    $check_email_query_run = mysqli_query($con, $check_email_query);
+    $stmt = $con->prepare("SELECT email FROM users WHERE email = ? LIMIT 1");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $check_email_query_run = $stmt->get_result();
 
     if (mysqli_num_rows($check_email_query_run) > 0) {
         $_SESSION['status'] = "Email ID Already Exists";
@@ -98,10 +100,11 @@ if (isset($_POST['register-btn'])) {
         exit();
     } else {
         // Insert user data into database
-        $query = "INSERT INTO users (name, phone, email, password, verify_token) VALUES ('$name', '$phone', '$email', '$hashed_password', '$verify_token')";
-        $query_run = mysqli_query($con, $query);
+        $stmt = $con->prepare("INSERT INTO users (name, phone, email, password, verify_token) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $name, $phone, $email, $hashed_password, $verify_token);
+        $stmt->execute();
 
-        if ($query_run) {
+        if ($stmt->affected_rows > 0) {
             sendemail_verify("$name", "$email", "$verify_token");
             $_SESSION['status'] = "Registration Successful! Please check your inbox to verify your Email.";
             header("Location: register.php");

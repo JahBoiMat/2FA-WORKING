@@ -3,16 +3,19 @@ session_start();
 include('dbcon.php');
 
 if (isset($_POST['verify_2fa_btn'])) {
-    $twofa_code = mysqli_real_escape_string($con, $_POST['twofa_code']);
+    $twofa_code = $_POST['twofa_code'];
     $email = $_SESSION['auth_temp_email']; // Temporary email stored during login process
 
-    $check_2fa_query = "SELECT * FROM users WHERE email='$email' AND twofa_code='$twofa_code' LIMIT 1";
-    $check_2fa_query_run = mysqli_query($con, $check_2fa_query);
+    $stmt = $con->prepare("SELECT * FROM users WHERE email = ? AND twofa_code = ? LIMIT 1");
+    $stmt->bind_param("ss", $email, $twofa_code);
+    $stmt->execute();
+    $check_2fa_query_run = $stmt->get_result();
 
     if (mysqli_num_rows($check_2fa_query_run) > 0) {
         // Clear the 2FA code from database
-        $clear_2fa_query = "UPDATE users SET twofa_code=NULL WHERE email='$email'";
-        mysqli_query($con, $clear_2fa_query);
+        $stmt = $con->prepare("UPDATE users SET twofa_code = NULL WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
 
         // Set session for successful login
         $row = mysqli_fetch_array($check_2fa_query_run);

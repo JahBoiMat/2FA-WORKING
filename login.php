@@ -41,7 +41,7 @@ include('includes/navbar.php');
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Password</label>
-                                <input type="text" name="password" class="form-control">
+                                <input type="password" name="password" class="form-control">
                             </div>
                             <div class="form-group">
                                 <button type="submit" name="login_now_btn" class="btn btn-primary">Login</button>
